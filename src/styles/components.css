@@ -1,0 +1,1838 @@
+/* Components. Class names are the contract for every page; see the design-system notes
+   in the build report. Order: text primitives, buttons, cards, the twelve-week band,
+   the check-in phone mock, the accountability loop, callouts, FAQ, forms, night section. */
+
+/* ---- Eyebrow: mono label above a heading ---- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--spruce);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.eyebrow--plain::before {
+  display: none;
+}
+
+/* Long eyebrows can wrap on phones: keep the rule on the first line. */
+.eyebrow::before {
+  align-self: flex-start;
+  margin-top: 0.6em;
+  flex: none;
+}
+
+/* Dawn is spent once per view; on night that is the button, so labels stay quiet. */
+.section--night .eyebrow {
+  color: var(--night-muted);
+}
+
+/* ---- Data label: mono for timestamps, day markers, statuses ---- */
+.data {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.section--night .data {
+  color: var(--night-muted);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.9rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-md);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--spruce);
+  color: #fff;
+  border-color: var(--spruce);
+}
+
+.btn--primary:hover {
+  background: var(--spruce-deep);
+  border-color: var(--spruce-deep);
+  color: #fff;
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--spruce);
+  border-color: var(--spruce);
+}
+
+.btn--secondary:hover {
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--spruce);
+  border-color: transparent;
+  padding-inline: 0.75rem;
+}
+
+.btn--ghost:hover {
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+}
+
+/* Dawn button: the one dawn spend on a night section. */
+.btn--dawn {
+  background: var(--dawn);
+  color: var(--night);
+  border-color: var(--dawn);
+}
+
+.btn--dawn:hover {
+  background: #f0b361;
+  border-color: #f0b361;
+  color: var(--night);
+}
+
+.btn--small {
+  min-height: 2.4rem;
+  padding: 0.45rem 1rem;
+  font-size: var(--text-sm);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn .btn__arrow {
+  transition: transform var(--dur) var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+.section--night .btn--secondary {
+  color: var(--night-ink);
+  border-color: var(--night-ink);
+}
+
+.section--night .btn--secondary:hover {
+  background: rgba(234, 241, 239, 0.1);
+  color: var(--night-ink);
+}
+
+.section--night .btn--ghost {
+  color: var(--night-ink);
+}
+
+.section--night .btn--ghost:hover {
+  background: rgba(234, 241, 239, 0.1);
+}
+
+/* ---- Pill: short status tag ---- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.pill--dawn {
+  background: var(--dawn-soft);
+  color: var(--dawn-deep);
+}
+
+.pill--outline {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.section--night .pill {
+  background: rgba(234, 241, 239, 0.1);
+  color: var(--night-ink);
+}
+
+.section--night .pill--dawn {
+  background: rgba(233, 162, 75, 0.16);
+  color: var(--dawn);
+}
+
+.pill__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---- Cards ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: var(--shadow-sm);
+}
+
+.card > * + * {
+  margin-top: var(--s-3);
+}
+
+.card h3,
+.card h4 {
+  margin-top: var(--s-2);
+}
+
+.card--soft {
+  background: var(--spruce-soft);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.card--night {
+  background: var(--night-surface);
+  border-color: var(--night-line);
+  color: var(--night-ink);
+  box-shadow: none;
+}
+
+.card--night .muted {
+  color: var(--night-muted);
+}
+
+.card--link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.card--link:hover {
+  border-color: var(--spruce);
+  color: inherit;
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--spruce);
+  margin-top: var(--s-4);
+}
+
+.card--link:hover .card__cta {
+  color: var(--spruce-deep);
+}
+
+/* Numbered list of "the five things" etc. */
+.numbered {
+  list-style: none;
+  padding: 0;
+  counter-reset: numbered;
+  display: grid;
+  gap: 0;
+}
+
+.numbered > li {
+  counter-increment: numbered;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--s-3) var(--s-4);
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--line);
+  max-width: none;
+}
+
+.numbered > li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.numbered > li::before {
+  content: "0" counter(numbered);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--spruce);
+  padding-top: 0.35rem;
+}
+
+/* Parallel items where order carries no meaning: a plain rule, no counter. */
+.numbered--plain > li {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.numbered--plain > li::before {
+  content: none;
+}
+
+.numbered h3,
+.numbered h4 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--s-2);
+}
+
+.numbered p {
+  color: var(--muted);
+}
+
+.numbered .data {
+  display: block;
+  margin-top: var(--s-2);
+}
+
+/* Two-column definition list (e.g. "does / does not") */
+.compare {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 48em) {
+  .compare {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.compare__col {
+  border-top: 3px solid var(--spruce);
+  padding-top: var(--s-4);
+}
+
+.compare__col--no {
+  border-top-color: var(--line);
+}
+
+.compare__col h3 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--s-4);
+}
+
+.compare__list {
+  list-style: none;
+  padding: 0;
+}
+
+.compare__list li {
+  position: relative;
+  padding-left: 1.75rem;
+  padding-block: 0.45rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.compare__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--spruce);
+}
+
+.compare__col--no .compare__list li::before {
+  background: transparent;
+  border: 1.5px solid var(--muted);
+}
+
+/* ---- Founder cards ---- */
+.founder {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+
+.founder > * {
+  min-width: 0;
+}
+
+.founder__mark {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--spruce-soft);
+  color: var(--spruce);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.03em;
+}
+
+.founder__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-xl);
+  letter-spacing: -0.01em;
+}
+
+.founder__role {
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.confirm {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px dashed var(--line);
+  padding: 0 0.35rem;
+  border-radius: var(--radius-sm);
+  vertical-align: middle;
+  white-space: normal;
+}
+
+/* ==========================================================================
+   THE TWELVE-WEEK BAND  (.band)
+   Eight marks: birth · day 3 · 7 · 14 · 21 · week 6 · 9 · 12.
+   --band-p (0..1) drives the fill and the dots. CSS animates it with a scroll timeline
+   where supported; src/scripts/timeline.ts sets it from an IntersectionObserver otherwise.
+   Under reduced motion every dot is lit.
+   ========================================================================== */
+@property --band-p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes band-light {
+  from {
+    --band-p: 0;
+  }
+  to {
+    --band-p: 1;
+  }
+}
+
+.band {
+  --band-p: 0;
+  --band-cols: 8;
+  --band-inset: 6.25%; /* half a column: the rail runs dot-centre to dot-centre */
+  position: relative;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  user-select: none;
+}
+
+/* Wide screens: the band is in the first frame, so it lights over the first stretch of page
+   scroll. Narrow screens: the band sits lower, so it lights as the band itself crosses the
+   viewport (a view timeline), not before the visitor reaches it. */
+@supports (animation-timeline: scroll()) {
+  .band[data-band] {
+    animation: band-light linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 var(--band-scroll, 520px);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (max-width: 59.99em) {
+    .band[data-band] {
+      animation: band-light linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 60%;
+    }
+  }
+}
+
+.band__lane {
+  position: relative;
+}
+
+.band__track {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--band-cols), 1fr);
+  position: relative;
+  padding-top: 1.75rem; /* room for the rail and dots */
+}
+
+.band__rail,
+.band__fill {
+  position: absolute;
+  top: 0.75rem;
+  left: var(--band-inset);
+  right: var(--band-inset);
+  height: 2px;
+  border-radius: 2px;
+}
+
+.band__rail {
+  background: var(--line);
+}
+
+.band__fill {
+  background: var(--dawn);
+  transform-origin: left center;
+  transform: scaleX(var(--band-p));
+}
+
+.band__mark {
+  position: relative;
+  text-align: center;
+  max-width: none;
+  padding-inline: 0.15rem;
+  --lit: clamp(0, calc(var(--band-p) * (var(--band-cols) - 1) - var(--i) + 1), 1);
+}
+
+/* Dots sit on the rail: the rail centre is 0.75rem + 1px from the lane top, the list item
+   starts 1.75rem down, so the dot centre is at -1rem (+1px) relative to the item. */
+.band__mark::before,
+.band__mark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(-1rem + 1px);
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.band__mark::before {
+  background: var(--ground);
+  border: 2px solid var(--line);
+}
+
+.band__mark::after {
+  background: var(--dawn);
+  box-shadow: 0 0 0 4px rgba(233, 162, 75, 0.22);
+  opacity: var(--lit);
+  transform: translate(-50%, -50%) scale(calc(0.6 + 0.4 * var(--lit)));
+}
+
+.band__mark--origin::before {
+  border-color: var(--spruce);
+  background: var(--spruce);
+}
+
+.band__mark--origin::after {
+  background: var(--spruce);
+  box-shadow: none;
+}
+
+.band__unit {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.2;
+}
+
+.band__n {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 0.9rem + 1.2vw, 1.7rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: color-mix(in srgb, var(--ink) calc(55% + 45% * var(--lit)), var(--line));
+  margin-top: 0.2rem;
+}
+
+.band__note {
+  display: none;
+  margin-top: 0.4rem;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--muted);
+  padding-inline: 0.35rem;
+}
+
+@media (min-width: 56em) {
+  .band__note {
+    display: block;
+  }
+}
+
+/* ACOG brackets under the band */
+.band__acog {
+  display: grid;
+  grid-template-columns: repeat(var(--band-cols), 1fr);
+  margin-top: 1.25rem;
+  row-gap: 0.55rem;
+}
+
+.band__span {
+  position: relative;
+  padding-top: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1.35;
+  max-width: none;
+}
+
+.band__span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.4rem;
+  border: 1px solid var(--spruce);
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+  opacity: 0.7;
+}
+
+/* birth (col 1 centre) → day 21 (col 5 centre): area is 5 cols, centres at 10% and 90% */
+.band__span--a {
+  grid-column: 1 / 6;
+  margin-inline: 10%;
+}
+
+/* birth → week 12: 8 cols, centres at 6.25% and 93.75% */
+.band__span--b {
+  grid-column: 1 / 9;
+  margin-inline: 6.25%;
+}
+
+.band__span strong {
+  color: var(--spruce-deep);
+  font-weight: 500;
+}
+
+@media (max-width: 40em) {
+  .band__span {
+    font-size: 0.64rem;
+  }
+
+  .band__unit {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band,
+  .band[data-band] {
+    --band-p: 1 !important;
+    animation: none !important;
+  }
+}
+
+/* Vertical variant for pages that need the twelve weeks as a reading list (how-it-works). */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  border-left: 2px solid var(--line);
+  margin-left: 0.4rem;
+}
+
+.timeline > li {
+  position: relative;
+  padding: 0 0 var(--s-6) var(--s-6);
+  max-width: none;
+}
+
+.timeline > li::before {
+  content: "";
+  position: absolute;
+  left: -0.5rem;
+  top: 0.35rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: var(--ground);
+  border: 2px solid var(--spruce);
+}
+
+.timeline > li.is-lit::before {
+  background: var(--spruce);
+  border-color: var(--spruce);
+  box-shadow: 0 0 0 4px var(--spruce-soft);
+}
+
+.timeline__when {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--spruce);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.timeline h3,
+.timeline h4 {
+  font-size: var(--text-xl);
+}
+
+.timeline p {
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+/* ==========================================================================
+   PHONE MOCK + CHECK-IN  (.phone, .checkin)
+   ========================================================================== */
+.phone {
+  width: min(22rem, 100%);
+  margin-inline: auto;
+  background: var(--ink);
+  border-radius: 2.6rem;
+  padding: 0.65rem;
+  box-shadow: var(--shadow-phone);
+}
+
+.phone__screen {
+  background: var(--surface);
+  border-radius: 2rem;
+  min-height: 36rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.phone__status {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.85rem 1.4rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+.phone__status .phone__notch {
+  width: 5.5rem;
+  height: 1.25rem;
+  background: var(--ink);
+  border-radius: 999px;
+  margin-top: -0.35rem;
+}
+
+.checkin {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.5rem 1.25rem 1.25rem;
+  gap: 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.checkin__practice {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.checkin__practice strong {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Locked emergency strip: sits above every question and beside every free-text field. */
+.checkin__safety {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--dawn);
+  border-radius: var(--radius);
+  background: var(--ground);
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+.checkin__safety p {
+  max-width: none;
+}
+
+.checkin__help {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.checkin__help:hover,
+.checkin__help[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.checkin__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.checkin__step {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--spruce);
+}
+
+.checkin__q {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: none;
+}
+
+.checkin__options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.checkin__options li {
+  max-width: none;
+}
+
+.chip {
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font-size: 0.92rem;
+  line-height: 1.3;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--spruce);
+}
+
+.chip[aria-pressed="true"],
+.chip.is-tapped {
+  border-color: var(--spruce);
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+  font-weight: 600;
+}
+
+.checkin__skip {
+  align-self: flex-start;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  padding: 0.25rem 0;
+}
+
+.checkin__close {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-radius: var(--radius);
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+  font-size: 0.9rem;
+}
+
+.checkin__close p {
+  max-width: none;
+}
+
+.checkin__close .data {
+  color: var(--spruce);
+}
+
+.checkin__emergency {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--night-ink);
+  font-size: 0.9rem;
+}
+
+.checkin__emergency p {
+  max-width: none;
+}
+
+.checkin__emergency strong {
+  color: #fff;
+}
+
+/* Stand-in for text each practice approves; styled so it cannot be mistaken for real guidance. */
+.checkin__placeholder {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  padding: 0.35rem 0.5rem;
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-sm);
+  opacity: 0.85;
+}
+
+/* Autoplay shows the tap before the answer is selected, so the demo never looks pre-answered. */
+.chip.is-tapping {
+  border-color: var(--spruce);
+  animation: chip-tap 520ms var(--ease);
+}
+
+@keyframes chip-tap {
+  0% { box-shadow: 0 0 0 0 rgba(31, 95, 91, 0.35); transform: scale(1); }
+  40% { transform: scale(0.98); }
+  100% { box-shadow: 0 0 0 10px rgba(31, 95, 91, 0); transform: scale(1); }
+}
+
+.checkin__foot {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* Controls live outside the phone so the mock reads as a screen. */
+.checkin__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.checkin__controls .btn--ghost {
+  min-height: 2.2rem;
+  font-size: var(--text-sm);
+}
+
+.checkin__progress {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.checkin__progress i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.checkin__progress i.is-done {
+  background: var(--spruce);
+}
+
+.checkin__progress i.is-current {
+  background: var(--ink);
+}
+
+[data-checkin][data-state="closing"] .checkin__progress i,
+[data-checkin][data-state="help"] .checkin__progress i {
+  background: var(--spruce);
+}
+
+/* ==========================================================================
+   ACCOUNTABILITY LOOP  (.loop)
+   ========================================================================== */
+.loop {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+@media (min-width: 60em) {
+  .loop {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.loop__figure {
+  margin: 0;
+}
+
+.loop__svg {
+  width: 100%;
+  height: auto;
+  font-family: var(--font-body);
+}
+
+.loop__svg--portrait {
+  max-width: 24rem;
+  margin-inline: auto;
+}
+
+.loop__svg--landscape {
+  display: none;
+}
+
+/* Rendered at about 0.92 scale on a 360px phone: 13.5px here is about 12.4px on screen. */
+.loop__svg--portrait .loop__node .loop__label {
+  font-size: 13.5px;
+}
+
+.loop__svg--portrait .loop__node .loop__num {
+  font-size: 12.5px;
+}
+
+@media (min-width: 40em) {
+  .loop__svg--portrait {
+    display: none;
+  }
+
+  .loop__svg--landscape {
+    display: block;
+  }
+}
+
+.loop__node rect {
+  fill: var(--surface);
+  stroke: var(--line);
+  stroke-width: 1.5;
+  transition: stroke var(--dur) var(--ease), fill var(--dur) var(--ease);
+}
+
+.loop__node .loop__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  fill: var(--ink);
+}
+
+.loop__node .loop__label {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  fill: var(--muted);
+}
+
+.loop__node .loop__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--muted);
+}
+
+.loop__node.is-active rect {
+  stroke: var(--spruce);
+  stroke-width: 2;
+  fill: var(--spruce-soft);
+}
+
+.loop__node.is-active .loop__label {
+  fill: var(--spruce-deep);
+}
+
+.loop__path {
+  fill: none;
+  stroke: var(--spruce);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.loop__arrow {
+  fill: var(--spruce);
+  opacity: 0.55;
+}
+
+.loop__dot {
+  fill: var(--dawn);
+  stroke: var(--ground);
+  stroke-width: 2;
+  offset-rotate: 0deg;
+}
+
+.loop__dot[hidden] {
+  display: none;
+}
+
+.loop__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: loop;
+  border-top: 1px solid var(--line);
+}
+
+.loop__steps > li {
+  counter-increment: loop;
+  max-width: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.loop__step {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.25rem 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.9rem 0.5rem 0.9rem 0.25rem;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.loop__step::before {
+  content: "0" counter(loop);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--spruce);
+  padding-top: 0.25rem;
+}
+
+.loop__step:hover {
+  background: var(--spruce-soft);
+}
+
+.loop__step[aria-current="step"] {
+  background: var(--spruce-soft);
+}
+
+.loop__step-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.loop__step-body {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.loop__step .data {
+  grid-column: 2;
+  display: block;
+}
+
+.loop__controls {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--s-3);
+}
+
+.loop__controls .btn--ghost {
+  min-height: 2.2rem;
+  font-size: var(--text-sm);
+}
+
+/* ---- Callout ---- */
+/* Default callout is neutral: ink rule on surface. Dawn is not spent on callouts. */
+.callout {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ink);
+  background: var(--surface);
+  padding: var(--s-4) var(--s-5);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.callout--spruce {
+  border-color: transparent;
+  border-left-color: var(--spruce);
+  background: var(--spruce-soft);
+}
+
+.callout--plain {
+  border-left-color: var(--line);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left-width: 3px;
+}
+
+.callout p + p {
+  margin-top: var(--s-3);
+}
+
+.callout__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: var(--s-2);
+}
+
+.callout--spruce .callout__title {
+  color: var(--spruce);
+}
+
+.section--night .callout {
+  background: var(--night-surface);
+  border-color: var(--night-line);
+  border-left-color: var(--night-ink);
+  color: var(--night-ink);
+}
+
+/* ---- FAQ ---- */
+.faq {
+  border-top: 1px solid var(--line);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--spruce);
+  transition: transform var(--dur) var(--ease);
+}
+
+.faq details[open] summary::after {
+  content: "–";
+}
+
+.faq details > *:not(summary) {
+  padding-bottom: var(--s-4);
+  color: var(--muted);
+}
+
+/* ---- Forms ---- */
+.form {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.form__row {
+  display: grid;
+  gap: var(--s-4);
+}
+
+@media (min-width: 40em) {
+  .form__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.form__legend {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.field__input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.field__label {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.field__label .optional {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.field__hint {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.field__input {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color var(--dur) var(--ease);
+}
+
+.field__input:hover {
+  border-color: var(--muted);
+}
+
+.field__input:focus-visible {
+  outline-offset: 1px;
+  border-color: var(--spruce);
+}
+
+textarea.field__input {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+select.field__input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%235A6763' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+}
+
+.field--check {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.6rem;
+}
+
+.field--check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.25rem;
+  accent-color: var(--spruce);
+}
+
+.field__error {
+  color: var(--danger);
+  font-size: var(--text-sm);
+}
+
+.form__note {
+  padding: var(--s-4);
+  border-radius: var(--radius);
+  background: var(--spruce-soft);
+  color: var(--spruce-deep);
+  font-size: var(--text-sm);
+}
+
+.form__note[hidden] {
+  display: none;
+}
+
+.form__note--error {
+  background: #fbe4de;
+  color: var(--danger);
+}
+
+/* ==========================================================================
+   NIGHT SECTION extras (.section--night) — nest canvas sits behind content
+   ========================================================================== */
+.section--night h1,
+.section--night h2,
+.section--night h3 {
+  color: var(--night-ink);
+}
+
+/* :not(.btn) so buttons keep their own colours (the dawn button is dark ink on dawn). */
+.section--night a:not(.btn) {
+  color: var(--night-ink);
+  text-decoration-color: rgba(234, 241, 239, 0.4);
+}
+
+.section--night a:not(.btn):hover {
+  color: #fff;
+}
+
+.section--night .btn--dawn,
+.section--night .btn--dawn:hover {
+  color: var(--night);
+}
+
+.section--night .card {
+  background: var(--night-surface);
+  border-color: var(--night-line);
+  color: var(--night-ink);
+  box-shadow: none;
+}
+
+.section--night .numbered > li {
+  border-color: var(--night-line);
+}
+
+.section--night .numbered p {
+  color: var(--night-muted);
+}
+
+.section--night .numbered > li::before {
+  color: var(--night-muted);
+}
+
+.nest {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nest canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Cards on a night section sit above the nest canvas. */
+.section--night .card {
+  position: relative;
+  z-index: 1;
+}
+
+.section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Metric list on night: "goals we will measure" */
+.measures {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem 1.5rem;
+}
+
+@media (min-width: 40em) {
+  .measures {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.measures li {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  max-width: none;
+  color: var(--night-ink);
+  font-size: var(--text-sm);
+}
+
+.measures li::before {
+  content: "";
+  margin-top: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--night-muted);
+}
+
+/* ---- Hero specifics ---- */
+.hero__grid {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.hero__aside {
+  display: grid;
+  gap: var(--s-5);
+  align-content: end;
+}
+
+@media (min-width: 60em) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  /* The aside drops to the headline's baseline only when the headline is the taller one. */
+  .hero__grid > .hero__aside {
+    align-self: end;
+  }
+
+  .hero__grid > .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .hero__aside {
+    padding-bottom: 0.5rem;
+  }
+}
+
+.hero__title {
+  max-width: 17ch;
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--spruce);
+}
+
+.hero__lead {
+  max-width: 52ch;
+  color: var(--muted);
+}
+
+.hero__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--s-2);
+}
+
+/* Audience cards (who it is for) */
+.audience {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 52em) {
+  .audience {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.audience .card ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  color: var(--muted);
+}
+
+.audience .card li {
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.audience .card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--spruce);
+}
+
+/* Stub note for pages in progress */
+.stub-note {
+  border: 1px dashed var(--line);
+  padding: var(--s-4);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+
+/* ---- Hero variants ----
+   Home keeps the full two-column hero. Other pages vary the composition so the site does not
+   read as one template filled six times. */
+
+/* Home + how-it-works on phones: eyebrow, headline, band, then the lead and buttons, so the
+   band is near the fold instead of after a long lead. */
+@media (max-width: 59.99em) {
+  .hero-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+
+  .hero-stack > .hero__grid {
+    display: contents;
+  }
+
+  .hero-stack .eyebrow { order: 0; }
+  .hero-stack .hero__title { order: 1; }
+  .hero-stack > .band { order: 2; margin-top: var(--s-2); }
+  .hero-stack .hero__aside { order: 3; }
+  .hero-stack > .hero__below { order: 4; }
+}
+
+/* Keep the whole band, ACOG brackets included, inside a 1280x800 or 1440x900 first frame. */
+@media (min-width: 60em) and (max-height: 960px) {
+  .section--hero:has(.band) {
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .section--hero:has(.band) .hero__title {
+    font-size: min(var(--text-display), 3.6rem);
+  }
+
+  .section--hero:has(.band) .hero__grid {
+    gap: var(--s-4);
+  }
+
+  .section--hero:has(.band) .hero__aside {
+    gap: var(--s-4);
+  }
+
+  .section--hero .band {
+    margin-top: var(--s-5);
+  }
+
+  .section--hero .band__note {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 60em) and (max-height: 850px) {
+  .section--hero:has(.band) .hero__title {
+    font-size: min(var(--text-display), 3.2rem);
+  }
+
+  .section--hero:has(.band) .hero__lead {
+    font-size: var(--text-md);
+  }
+
+  .section--hero .band {
+    margin-top: var(--s-4);
+  }
+
+  .section--hero .band__note {
+    font-size: 0.74rem;
+    line-height: 1.3;
+  }
+
+  .section--hero .band__acog {
+    margin-top: 0.75rem;
+    row-gap: 0.35rem;
+  }
+}
+
+/* Band-led hero (how-it-works): one wide headline, the band as the first large element,
+   then the lead and actions in a row under it. */
+.hero--band .hero__title {
+  max-width: 24ch;
+}
+
+.hero__below {
+  display: grid;
+  gap: var(--s-5);
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+@media (min-width: 60em) {
+  .hero__below {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .hero__below .cluster {
+    justify-content: flex-start;
+  }
+}
+
+/* Single-column narrow hero (for-families): headline, lead, one row of actions. */
+.hero--narrow {
+  max-width: 50rem;
+}
+
+.hero--narrow > * + * {
+  margin-top: var(--s-5);
+}
+
+.hero--narrow .hero__title {
+  max-width: 20ch;
+}
+
+.hero--narrow .hero__lead {
+  max-width: 56ch;
+}
+
+/* Compact title (contact): small hero, the form is the first real thing on the page. */
+.section--compact {
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.hero--compact > * + * {
+  margin-top: var(--s-3);
+}
+
+.hero--compact .hero__title {
+  max-width: none;
+  font-size: var(--text-3xl);
+}
+
+.hero--compact .hero__lead {
+  max-width: 64ch;
+}
+
+/* Wider aside column where the actions are long (for-practices). */
+@media (min-width: 60em) {
+  .hero__grid--even {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* ---- Where the model sits in the week (how-it-works, night) ---- */
+.ai-week {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--night-line);
+}
+
+.ai-week > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.2rem 2rem;
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--night-line);
+  max-width: none;
+}
+
+@media (min-width: 48em) {
+  .ai-week > li {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.ai-week__when {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--night-muted);
+}
+
+.ai-week__what {
+  color: var(--night-ink);
+  max-width: 60ch;
+}
+
+.ai-never {
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--night-line);
+  color: var(--night-muted);
+  max-width: 68ch;
+}
+
+.ai-never strong {
+  color: var(--night-ink);
+}
+
+/* ---- Definition rows (how-it-works "what a patient gets") ---- */
+.defs {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.defs > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.25rem var(--s-6);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  .defs > div {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+}
+
+.defs dt {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.defs dd {
+  color: var(--muted);
+}
+
+.defs dd .data {
+  display: block;
+  margin-top: 0.3rem;
+}
+
+/* Framing line near the top of audience pages. */
+.status-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.hero--band .hero__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.hero--band .hero__title {
+  max-width: none;
+}
+
+.field--check .field__error {
+  grid-column: 1 / -1;
+}
+

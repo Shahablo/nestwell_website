@@ -1,0 +1,411 @@
+/* Containers, grids, section rhythm, header and footer. */
+
+/* ---- Containers ---- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.container--wide {
+  max-width: 88rem;
+}
+
+/* ---- Section rhythm ----
+   <section class="section"> = one band of the page. Sections alternate ground / surface / night.
+   Inside: .section__head (eyebrow + h2 + optional lead), then content. */
+.section {
+  padding-block: var(--section-pad);
+  position: relative;
+}
+
+.section--tight {
+  padding-block: calc(var(--section-pad) * 0.6);
+}
+
+.section--surface {
+  background: var(--surface);
+  border-block: 1px solid var(--line-soft);
+}
+
+.section--soft {
+  background: var(--spruce-soft);
+}
+
+.section--night {
+  background: var(--night);
+  color: var(--night-ink);
+}
+
+.section--hero {
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section__head {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  max-width: 44rem;
+}
+
+.section__head > * + * {
+  margin-top: var(--s-4);
+}
+
+.section__head .lead {
+  color: var(--muted);
+}
+
+.section--night .section__head .lead,
+.section--night .muted {
+  color: var(--night-muted);
+}
+
+/* ---- Flow (vertical rhythm inside a block) ---- */
+.flow > * + * {
+  margin-top: var(--flow, var(--s-4));
+}
+
+.flow--lg {
+  --flow: var(--s-6);
+}
+
+/* ---- Grids ---- */
+.grid {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+/* Asymmetric editorial split: text left, device right. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.split > *,
+.grid > * {
+  min-width: 0;
+}
+
+@media (min-width: 60em) {
+  .split {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .split--even {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .split--reverse {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .split > .split__sticky {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  align-items: center;
+}
+
+/* ---- Header ----
+   Markup contract: see src/partials/header.html. Copy verbatim; JS sets aria-current. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--ground) 92%, transparent);
+  backdrop-filter: saturate(1.2) blur(10px);
+  -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: var(--header-h);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.brand:hover {
+  color: var(--spruce-deep);
+}
+
+.brand__mark {
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.site-nav__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: clamp(0.75rem, 1.8vw, 1.75rem);
+  align-items: center;
+}
+
+.site-nav__list a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav__list a:hover {
+  border-bottom-color: var(--line);
+}
+
+.site-nav__list a[aria-current="page"] {
+  color: var(--spruce);
+  border-bottom-color: var(--spruce);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  background: var(--surface);
+}
+
+.nav-toggle__bars {
+  width: 18px;
+  height: 12px;
+  position: relative;
+}
+
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav-toggle__bars::before {
+  top: 0;
+  box-shadow: 0 5px 0 currentColor;
+}
+
+.nav-toggle__bars::after {
+  bottom: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before {
+  top: 5px;
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after {
+  bottom: 5px;
+  transform: rotate(-45deg);
+}
+
+/* Without JavaScript the toggle cannot work, so the nav stays visible as a plain stacked list.
+   The inline head snippet sets html[data-js] before first paint when scripts run. */
+@media (max-width: 56em) {
+  html[data-js] .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+  }
+
+  html:not([data-js]) .site-nav {
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: var(--s-4);
+  }
+
+  html[data-js] .site-nav {
+    display: none;
+    position: absolute;
+    inset: 100% 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--s-4);
+    padding: var(--s-4) var(--gutter) var(--s-6);
+    background: var(--ground);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+
+  html[data-js] .site-header[data-open="true"] .site-nav {
+    display: flex;
+  }
+
+  .site-nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .site-nav__list a {
+    display: block;
+    padding: 0.8rem 0;
+    font-size: var(--text-md);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .site-nav__list a[aria-current="page"] {
+    border-bottom-color: var(--line-soft);
+  }
+
+  .site-nav__cta {
+    align-self: flex-start;
+  }
+}
+
+/* ---- Main ---- */
+main {
+  display: block;
+}
+
+/* ---- Footer ----
+   Markup contract: see src/partials/footer.html. */
+.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-block: var(--s-8) var(--s-6);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48em) {
+  .site-footer__grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 64em) {
+  .site-footer__grid {
+    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  }
+}
+
+.site-footer h2 {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--s-3);
+  letter-spacing: 0.08em;
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.site-footer li + li {
+  margin-top: var(--s-2);
+}
+
+.site-footer a {
+  color: var(--ink);
+}
+
+.site-footer .brand {
+  margin-bottom: var(--s-3);
+}
+
+.site-footer__tagline {
+  max-width: 30ch;
+}
+
+.site-footer__notes p + p {
+  margin-top: var(--s-3);
+}
+
+.site-footer__emergency {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-5);
+  margin-top: var(--s-7);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* Narrow reading column, left-aligned to the same edge as every other section. */
+.container.container--narrow {
+  max-width: var(--container);
+}
+
+.container--narrow > * {
+  max-width: var(--container-narrow);
+}
+
+/* A heading directly over its paragraph or list inside a grouped block gets the same gap
+   everywhere (for example "What stops" / "What stays" on for-families). */
+.flow > div > h3 + p,
+.flow > div > h3 + ul,
+.flow > div > h3 + ol {
+  margin-top: var(--s-3);
+}

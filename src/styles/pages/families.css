@@ -1,0 +1,180 @@
+/* For families page. Adds the contact-card mock and the sharing-choice list; everything
+   else on the page is the shared component set. Tokens only; no hard-coded colour or font. */
+
+/* ---- Contact card: the named person, hours and after-hours line as it sits on the home
+   screen. Static mock; labelled as a synthetic example in the markup. ---- */
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: var(--s-4);
+}
+
+.contact-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.contact-card__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: none;
+}
+
+.contact-card__role {
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.contact-card__rows {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.contact-card__rows > div {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 2fr) 3fr;
+  gap: var(--s-3);
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: var(--text-sm);
+}
+
+.contact-card__rows dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  padding-top: 0.1rem;
+}
+
+.contact-card__rows dd {
+  color: var(--ink);
+}
+
+.contact-card__rows dd strong {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+
+.contact-card__help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  justify-self: start;
+}
+
+.contact-card__lock {
+  display: block;
+}
+
+/* ---- Sharing choices: the four destinations for mental-health answers ---- */
+.choices {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+@media (min-width: 40em) {
+  .choices {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choices > li {
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 0 0.75rem;
+  align-items: start;
+  padding: var(--s-4);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.choices > li::before {
+  content: "";
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.2rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  background: var(--surface);
+}
+
+.choices > li.is-picked {
+  border-color: var(--spruce);
+  background: var(--spruce-soft);
+}
+
+.choices > li.is-picked::before {
+  border-color: var(--spruce);
+  background: radial-gradient(circle, var(--spruce) 0 40%, var(--surface) 42%);
+}
+
+.choices > li::before {
+  grid-row: 1 / span 2;
+}
+
+.choices__title {
+  grid-column: 2;
+  font-weight: 600;
+  display: block;
+}
+
+.choices__body {
+  grid-column: 2;
+  display: block;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  margin-top: 0.15rem;
+}
+
+/* ---- "What stops" list on the loss section ---- */
+.stops {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.stops > li {
+  position: relative;
+  padding-left: 1.75rem;
+  max-width: none;
+}
+
+.stops > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 0.9rem;
+  height: 2px;
+  background: var(--muted);
+}

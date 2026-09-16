@@ -1,0 +1,109 @@
+/* About page. Adds the monogram portraits and the two-up founder layout; principles,
+   evidence and the Ohio block reuse the shared component set. Tokens only. */
+
+.founders {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 52em) {
+  .founders {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.founder--portrait {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+}
+
+@media (min-width: 30em) {
+  .founder--portrait {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+}
+
+.portrait {
+  width: 7rem;
+  height: 7rem;
+  flex: none;
+}
+
+.portrait__ground {
+  fill: var(--spruce-soft);
+}
+
+.portrait__arc {
+  fill: none;
+  stroke: var(--spruce);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.portrait__arc--dawn {
+  stroke: var(--dawn);
+}
+
+.portrait__initials {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 36px;
+  letter-spacing: -0.04em;
+  fill: var(--spruce-deep);
+}
+
+.founder__facts {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--s-3);
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+
+.founder__facts li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.founder__facts li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--spruce);
+}
+
+.founder .data {
+  display: block;
+  margin-top: var(--s-3);
+}
+
+/* Evidence cards: a source, what it shows, what it does not. */
+.evidence h3 {
+  font-size: var(--text-xl);
+}
+
+.evidence__row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: var(--s-3);
+  font-size: var(--text-sm);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line-soft);
+}
+
+.evidence__row dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  padding-top: 0.15rem;
+}
+
+.evidence__row dd {
+  color: var(--ink);
+}
