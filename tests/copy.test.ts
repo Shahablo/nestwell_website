@@ -1,9 +1,10 @@
 /**
  * Copy rules from docs/BRIEF.md section 2. Scans every .html at the repo root and every
- * src/** /*.ts file for prohibited phrases (case-insensitive, word boundaries), and checks that
- * every page has a unique <title> and a <meta name="description">.
+ * src/** /*.ts file, plus the walkthrough captions in public/media/*.vtt, for prohibited phrases
+ * (case-insensitive, word boundaries), and checks that every page has a unique <title> and a
+ * <meta name="description">.
  */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -69,12 +70,22 @@ const htmlFiles = readdirSync(ROOT)
   .map((f) => join(ROOT, f));
 const tsFiles = walk(join(ROOT, 'src'), (f) => f.endsWith('.ts'));
 const partials = walk(join(ROOT, 'src', 'partials'), (f) => f.endsWith('.html'));
-const scanned = [...htmlFiles, ...tsFiles, ...partials];
+const mediaDir = join(ROOT, 'public', 'media');
+const captionFiles = existsSync(mediaDir)
+  ? walk(mediaDir, (f) => f.endsWith('.vtt'))
+  : [];
+const scanned = [...htmlFiles, ...tsFiles, ...partials, ...captionFiles];
 
 describe('prohibited phrases (BRIEF.md section 2)', () => {
   it('finds pages to scan', () => {
     expect(htmlFiles.length).toBeGreaterThanOrEqual(7);
     expect(tsFiles.length).toBeGreaterThan(0);
+  });
+
+  it('finds the walkthrough captions to scan', () => {
+    expect(captionFiles.map((f) => relative(ROOT, f).split('\\').join('/'))).toContain(
+      'public/media/nestwell-walkthrough.vtt',
+    );
   });
 
   for (const file of scanned) {

@@ -1836,3 +1836,131 @@ select.field__input {
   grid-column: 1 / -1;
 }
 
+
+/* ---- Walkthrough video (home, how it works) ----
+   Sits directly after the hero on ground, separated by a hairline. The frame is softly rounded
+   with the poster inside; captions come from the VTT track; the transcript folds below. */
+.section--watch {
+  border-top: 1px solid var(--line-soft);
+}
+
+.watch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.watch__head {
+  margin-bottom: 0;
+}
+
+.watch__meta time {
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.watch__frame {
+  margin: 0;
+  padding: clamp(0.35rem, 0.8vw, 0.6rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius-lg) + 0.35rem);
+  box-shadow: var(--shadow-phone);
+}
+
+.watch__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  background: var(--ground);
+}
+
+.watch__transcript {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-block: 1px solid var(--line);
+}
+
+.watch__transcript summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+.watch__transcript summary::-webkit-details-marker {
+  display: none;
+}
+
+.watch__transcript summary::after {
+  content: "+";
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--spruce);
+}
+
+.watch__transcript[open] summary::after {
+  content: "–";
+}
+
+.watch__scenes {
+  padding-bottom: var(--s-6);
+  columns: 1;
+  column-gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.watch__scene {
+  break-inside: avoid;
+  padding-top: var(--s-4);
+}
+
+.watch__scene h3 {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--spruce);
+  margin-bottom: 0.35rem;
+}
+
+.watch__scene p {
+  color: var(--muted);
+}
+
+@media (min-width: 48em) {
+  .watch__scenes {
+    columns: 2;
+  }
+}
+
+@media (min-width: 60em) {
+  .watch {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .watch--compact {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  .watch--compact h2 {
+    font-size: var(--text-2xl);
+  }
+}
